@@ -26,23 +26,34 @@
         });
 
         window.addEventListener('show-modal', (params) => {
-                return getModal(params.detail.modal).show()
-            });
-            window.addEventListener('hide-modal', (params) => {
-                return getModal(params.detail.modal).hide()
-            });
+            return getModal(params.detail.modal).show()
+        });
+        window.addEventListener('hide-modal', (params) => {
+            return getModal(params.detail.modal).hide()
+        });
 
-            function getModal(modal) {
-                return tabler.bootstrap.Modal.getOrCreateInstance('#' + modal)
-            }
+        function getModal(modal) {
+            return tabler.bootstrap.Modal.getOrCreateInstance('#' + modal)
+        }
 
-            window.addEventListener('show-modal-delete', (params) => {
-                return getModal('modal-delete').show()
-            });
+        window.addEventListener('show-modal-delete', (params) => {
+            return getModal('modal-delete').show()
+        });
 
-            window.addEventListener('hide-modal-delete', (params) => {
-                return getModal('modal-delete').hide()
-            });
+        window.addEventListener('hide-modal-delete', (params) => {
+            return getModal('modal-delete').hide()
+        });
+
+            // const qrModal = document.getElementById('qrModal');
+
+            // qrModal.addEventListener('shown.bs.modal', () => {
+            //     startScanner();
+            // });
+
+            // qrModal.addEventListener('hidden.bs.modal', () => {
+            //     stopScanner();
+            // });
+
 
             window.addEventListener('flash-message', (params) => {
                 const flash = document.getElementById('alert-message');

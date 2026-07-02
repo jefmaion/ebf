@@ -18,6 +18,11 @@ return [
 
         'Bem-Vindo' => 'nav-header',
 
+        'Participantes' => [
+            'route' => 'participant',
+            'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
+        ],
+
         'Checkin' => [
             'route' => 'checkin',
             'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),

@@ -1,22 +1,50 @@
 <div>
-
     <div id="reader" style="width:100%"></div>
-
-    <div class="alert alert-success mt-3">
-
         QR Code:
 
-        <strong>{{ $code }}</strong>
+        <button type="button" name="" id="" class="btn btn-primary btn-lg w-100 mb-3" wire:click="$dispatch('start-scanner')">Ler QRCode</button>
+        @if($register)
+        <div class="card">
+            <div class="modsal-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <span class="avatar avatar-xl"> {{ $register->id }} </span>
+                        </div>
+                        <div class="col-12 text-center">
+                            <h1>{{ $register->childname }}</h1>
+                            <p class="text-muted">{{ $register->childage }} anos - Gênero: {{ $register->childgender }}
+                            </p>
+                            <p class="text-muted"><strong>Responsável: </strong>{{ $register->name }}</p>
+                        </div>
+                    </div>
+                    @if(!empty($register->food_restriction))
+                    <p><strong>Restrição alimentar: </strong>{{ $register->food_restriction }}</p>
+                    @endif
+                </div>
 
-    </div>
+                <div class="card-sfooter">
+
+
+                </div>
+
+            </div>
+        </div>
+
+        @if(empty($register->checkin_date))
+                    <button type="button" name="" id="" class="btn btn-primary btn-lg w-100 mt-3" wire:click="doCheckin()">Realizar Checkin</button>
+                    @else
+                        <div class="alert alert-warning">Checkin Já Realizado</div>
+
+                    @endif
+        @endif
 
 </div>
 
 @script
 
 <script>
-
-let scanner = null;
+    let scanner = null;
 
 function beep(duration = 150, frequency = 900, volume = 0.5){
 
@@ -43,7 +71,6 @@ function startScanner(){
 
     scanner = new Html5Qrcode("reader");
 
-    scanner = new Html5Qrcode("reader");
 
 scanner.start(
     { facingMode: "environment" },
@@ -56,6 +83,7 @@ scanner.start(
     },
     (decodedText, decodedResult) => {
         console.log("QR detectado:", decodedText);
+        console.log("QR detectado:", decodedResult);
 
         scanner.stop();
         beep();
@@ -69,7 +97,11 @@ scanner.start(
 
 }
 
-startScanner();
+Livewire.on('start-scanner', () => {
+    startScanner();
+});
+
+ startScanner();
 
 </script>
 

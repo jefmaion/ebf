@@ -3,14 +3,13 @@
 declare(strict_types = 1);
 
 use App\Livewire\Checkin\CheckinCam;
+use App\Livewire\Checkin\CheckinPage;
 use App\Livewire\Dashboard;
+use App\Livewire\Participant\ParticipantPage;
 use App\Livewire\Profile;
-use Illuminate\Support\Facades\Route;
-
 use App\Livewire\Register\RegisterForm;
 use App\Livewire\Register\RegisterSuccess;
-
-use App\Livewire\Checkin\CheckinPage;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
@@ -21,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
 
+
+    Route::get('participants', ParticipantPage::class)->name('participant');
     Route::get('checkin', CheckinPage::class)->name('checkin');
     Route::get('checkin-cam', CheckinCam::class)->name('cam');
 });

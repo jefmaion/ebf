@@ -16,18 +16,20 @@ class CheckinShow extends Component
 {
 
     public Register $register;
+    public $type = null;
 
 
     #[On('show-checkin')]
-    public function show(Register $register) {
+    public function show(Register $register, $type=null) {
         $this->register = $register;
+        $this->type = $type;
         $this->dispatch('show-modal', modal:'modal-show-checkin');
     }
 
     public function doCheckin() {
         // gerar hash
         // imprimir etiqueta
-        $this->register->update(['checkin_date' => now(), 'user_id_checkin' => auth()->user()->id]);
+        $this->register->update([$this->type . '_date' => now(), 'user_id_checkin' => auth()->user()->id]);
         $this->dispatch('hide-modal', modal:'modal-show-checkin');
         $this->dispatch('checkin-changed');
     }
@@ -46,6 +48,8 @@ class CheckinShow extends Component
         $printer->cut();
         $printer->close();
     }
+
+
 
     public function render()
     {

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Livewire\Checkin;
+namespace App\Livewire\Participant;
 
-use Livewire\Component;
 use App\Models\Register;
+use Livewire\Attributes\On;
+use Livewire\Component;
 use Livewire\WithPagination;
 
-use Livewire\Attributes\On;
-
-
-class CheckinPage extends Component
+class ParticipantPage extends Component
 {
 
     use WithPagination;
@@ -18,9 +16,6 @@ class CheckinPage extends Component
 
     public $search = '';
 
-    public function qrReader() {
-        $this->dispatch('show-reader');
-    }
 
     #[On('checkin-changed')]
     public function refresh() {
@@ -43,8 +38,8 @@ class CheckinPage extends Component
 
     public function render()
     {
-        return view('livewire.checkin.checkin-page', [
-            'children' => Register::WhereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orWhereLike('phone', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(3)
+        return view('livewire.participant.participant-page', [
+            'children' => Register::whereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(10)
         ]);
     }
 }

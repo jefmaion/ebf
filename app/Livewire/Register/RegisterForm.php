@@ -2,18 +2,22 @@
 
 namespace App\Livewire\Register;
 
-use Livewire\Component;
-use Livewire\Attributes\Layout;
-
+use App\Livewire\Forms\Register\FormRegister;
 use App\Models\Register;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RegisterForm extends Component
 {
+
+
+    public FormRegister $form;
 
     public $max = 125;
     public $canRegister = true;
@@ -22,57 +26,20 @@ class RegisterForm extends Component
     public $current = 1;
     public $previous = 0;
 
-    public $name;
-    public $email;
-    public $phone;
-    public $childname;
-    public $childbirthdate;
-    public $childage;
-    public $childgender;
-    public $childchurch;
-    public $agree;
+
+    public function getAge() {
+        $this->form->childage = Carbon::parse($this->form->childbirthdate)->age;
+    }
+
 
     public function mount() {
-
         $this->canRegister = Register::count() < $this->max;
-
     }
 
-    public function rules() {
-
-        $_rules = [
-            1 => [
-                'name' => ['required'],
-                'email' => ['required'],
-            ],
-
-            2 => [
-                'childname' => ['required', Rule::unique('registers')->where('name', $this->name)->where('childname', $this->childname)],
-                'childbirthdate' => ['required'],
-                'childage' => ['required'],
-                'childgender' => ['required'],
-            ],
-
-            3 => [
-                'agree' => ['accepted', Rule::unique('registers')->where('name', $this->name)->where('childname', $this->childname)],
-            ]
-        ];
-
-
-        $rules = $_rules[$this->current];
-
-        return $rules;
-    }
-
-    protected function messages()
-    {
-        return [
-            'agree.accepted' => 'Você precisa aceitar os termos para finalizar',
-        ];
-    }
 
     public function nextPage($val) {
-        $this->doValidation();
+        $this->form->_step = $this->current;
+        $this->form->validate();
         $this->refreshPagination($val);
     }
 
@@ -86,36 +53,10 @@ class RegisterForm extends Component
         $this->previous = ($this->current - 1) == 0 ? 1 : $this->current - 1;
     }
 
-    public function doValidation() {
-        $this->resetValidation();
-        $this->validate();
-    }
-
 
     public function save() {
-        $this->doValidation();
 
-
-        $register = Register::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'childname' => $this->childname,
-            'childbirthdate' => $this->childbirthdate,
-            'childage' => $this->childage,
-            'childgender' => $this->childgender,
-            'childchurch' => $this->childchurch,
-            'agree' => $this->agree,
-
-            'hash' => Str::uuid()
-        ]);
-
-        Storage::disk('public')->put(
-            "qrcodes/{$register->hash}.png",
-            QrCode::format('png')
-                ->size(400)
-                ->generate($register->hash)
-        );
+        $register = $this->form->store();
 
         // enviar email
         // enviar zap

@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('childchurch')->nullable();
             $table->boolean('agree')->default(false);
             $table->string('hash')->nullable();
+            $table->string('food_restriction')->nullable();
+            $table->string('bracelet_color')->nullable();
 
             $table->datetime('checkin_date')->nullable();
             $table->datetime('checkout_date')->nullable();
