@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('food_restriction')->nullable();
             $table->string('bracelet_color')->nullable();
 
+            $table->string('photo')->nullable();
+
             $table->datetime('checkin_date')->nullable();
             $table->datetime('checkout_date')->nullable();
 

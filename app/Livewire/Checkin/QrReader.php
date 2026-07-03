@@ -16,15 +16,10 @@ class QrReader extends Component
         $this->dispatch('show-modal', modal: 'qrModal');
     }
 
-    public function qrCodeRead($code)
-    {
-
-
+    public function qrCodeRead($code){
         $this->register = Register::where('hash', $code)->first();
-
+        $this->dispatch('qrcode-loaded', register: $this->register);
         $this->dispatch('hide-modal', modal: 'qrModal');
-         $this->dispatch('show-checkin', register: $this->register);
-
     }
 
     public function render()

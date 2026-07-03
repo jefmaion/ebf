@@ -25,6 +25,7 @@ class CheckinPage extends Component
     #[On('checkin-changed')]
     public function refresh() {
         $this->dispatch('$refresh');
+        $this->search = null;
     }
 
     #[On('delete-checkin')]
@@ -43,8 +44,11 @@ class CheckinPage extends Component
 
     public function render()
     {
+
+
+
         return view('livewire.checkin.checkin-page', [
-            'children' => Register::WhereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orWhereLike('phone', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(3)
+            'children' => Register::WhereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orWhereLike('phone', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(10)
         ]);
     }
 }

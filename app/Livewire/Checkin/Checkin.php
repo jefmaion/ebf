@@ -2,44 +2,42 @@
 
 namespace App\Livewire\Checkin;
 
+use App\Actions\PrintLabel;
 use App\Models\Register;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
 
-class CheckinShow extends Component
+class Checkin extends Component
 {
 
-    public Register $register;
-    public $type = null;
+    public ?Register $register = null;
 
-    public $fotoCapturada = null;
     public $takePhoto = false;
 
 
-    #[On('show-checkin')]
-    public function show(Register $register, $type=null) {
+    #[On('make-checkin')]
+    #[On('qrcode-loaded')]
+    public function select(Register $register) {
         $this->register = $register;
-        $this->type = $type;
-
         $this->dispatch('show-modal', modal:'modal-show-checkin');
+
     }
 
-    public function getPhoto() {
+     public function getPhoto() {
 
         $this->takePhoto = (!$this->takePhoto);
     }
 
+    #[On('photo-result')]
     public function setPhoto($photo)
     {
 
 
-
         // Aqui você já tem acesso ao $this->fotoCapturada preenchido
-      
+
 
             // 1. Remove o cabeçalho do Base64 (ex: "data:image/jpeg;base64,")
             // Deixando apenas a string de dados pura
@@ -60,54 +58,35 @@ class CheckinShow extends Component
             Storage::disk('public')->put($nomeArquivo, $imagemDecodificada);
 
 
-           
-
             $this->register->update([
                 'photo' => $nomeArquivo, // Salvando a string Base64 direto na tabela
             ]);
 
             $this->register->refresh();
 
+            $this->takePhoto = false;
+
             $this->dispatch('$refresh');
-            $this->dispatch('checkin-changed');
-        
+
     }
 
     public function doCheckin() {
-        // gerar hash
-        // imprimir etiqueta
-        
 
-
-        $this->register->update([$this->type . '_date' => now(), 'user_id_checkin' => auth()->user()->id]);
-
-
- // Limpa a propriedade após salvar
-        $this->reset('fotoCapturada');
-
+        $this->register->update(['checkin_date' => now(), 'user_id_checkin' => auth()->user()->id]);
         $this->dispatch('hide-modal', modal:'modal-show-checkin');
         $this->dispatch('checkin-changed');
     }
 
     public function print() {
+        PrintLabel::run($this->register);
 
 
-        $connector = new WindowsPrintConnector("POS58");
-        $printer = new Printer($connector);
 
-        $printer->text("CHECK-IN EVENTO\n");
-        $printer->text("Nome: ".$this->register->childname."\n");
-        $printer->text("Código: ".$this->register->hash."\n");
-
-        $printer->feed(2);
-        $printer->cut();
-        $printer->close();
     }
-
 
 
     public function render()
     {
-        return view('livewire.checkin.checkin-show');
+        return view('livewire.checkin.checkin');
     }
 }

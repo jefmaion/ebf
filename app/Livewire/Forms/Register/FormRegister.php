@@ -69,6 +69,18 @@ class FormRegister extends Form
         ];
     }
 
+    public function getAgeGroupColor($age): string
+    {
+        $idade = $age;
+
+        return match (true) {
+            $idade <= 7  => 'bg-danger text-white',   // Berçário / Maternal (Ex: Vermelho)
+            $idade <= 9  => 'bg-warning text-dark',   // Infantil (Ex: Amarelo)
+            $idade <= 11  => 'bg-success text-white',  // Juniores 1 (Ex: Verde)
+            default      => 'bg-secondary text-white' // Outros / Adolescentes
+        };
+    }
+
 
     public function store() {
 
@@ -89,25 +101,29 @@ class FormRegister extends Form
             'agree' => $data['agree'],
             'food_restriction' => $data['food_restriction'],
 
+            'bracelet_color' => $this->getAgeGroupColor($data['childage']),
+
             'hash' => Str::uuid()
         ]);
+        
 
-        Storage::disk('public')->put("qrcodes/{$register->hash}.png",QrCode::format('png')->size(400)->margin(2)->generate($register->hash));
+        // Storage::disk('public')->put("qrcodes/{$register->hash}.png",QrCode::format('png')->size(400)->margin(2)->generate($register->hash));
 
 
-        Mail::to($register->email)->send(
-            new WelcomeRegister(
-                $register->name, 
-                $register->childname, 
-                $register->hash // O ID que a sua impressora MPT vai ler depois!
-            )
-        );
+        // Mail::to($register->email)->send(
+        //     new WelcomeRegister(
+        //         $register->name, 
+        //         $register->childname, 
+        //         $register->hash // O ID que a sua impressora MPT vai ler depois!
+        //     )
+        // );
 
         return $register;
 
     }
 
     public function populate(Register $register) {
+ 
 
         $this->register = $register;
 

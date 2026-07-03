@@ -1,136 +1,114 @@
 <div>
-    <x-slot:header>
 
+    <div class="row g-2 align-items-center mb-2">
+        <div class="col">
+            <!-- Page pre-title -->
+            <h2 class="page-title">Checkin</h2>
 
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <!-- Page pre-title -->
-                <div class="page-pretitle">Overview</div>
-                <h2 class="page-title">Dashboard</h2>
-
-                <!-- BEGIN MODAL -->
-                <!-- END MODAL -->
-            </div>
+            <!-- BEGIN MODAL -->
+            <!-- END MODAL -->
         </div>
+        <div class="col">
+            asd
+        </div>
+    </div>
 
-    </x-slot:header>
-
-    <a href="{{route('cam')}}">Ler QrCOde</a> |  <a href="#" wire:click="$dispatch('show-reader')">Ler QrCOde</a>
-    <div class="card">
+    <a href="{{route('cam')}}">Ler QrCOde</a> | <a href="#" wire:click="$dispatch('show-reader')">Ler QrCOde</a>
+    <div class="card mb-3">
         <div class="card-header">
-            <input type="text" class="form-control" wire:model.live="search" placeholder="Pesquisar">
-
+            <input type="text" class="form-control form-control-lg" wire:model.live="search" placeholder="Pesquisar">
         </div>
 
+        <table class="table table-vcenter table-sm card-table table-striped">
+            <thead class="d-none d-md-table-header-group">
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Responsável</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
 
-        <div class="table-responsive">
-            <table class="table table-vcenter card-table">
-                <thead class="d-none d-md-table-header-group">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Idade</th>
-                        <th>Responsável</th>
-                        <th>Status</th>
-                        <th>Check-in</th>
-                        <th>Check-out</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
+            {{-- Mobile --}}
+            <thead class="d-table-header-group d-md-none">
+                <tr>
+                    <th>Crianças</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($children as $child)
+                <tr class="d-none d-md-table-row">
+                    <td class="d-flex align-items-center"><span class="avatar avatar-lg me-3"
+                            style="background-image: url({{ $child->photo() }})"> </span> {{ $child->childname }}</td>
+                    <td class="text-secondary">
+                        <span class="badge bg-{{ $child->bracelet() }} text-{{ $child->bracelet() }}-fg px-4">{{
+                            $child->childage }} anos</span>
+                    </td>
+                    <td class="text-secondary">{{ $child->name }}</td>
+                    <td class="text-secondary">{{ $child->phone }}
+                    </td>
 
-                {{-- Mobile --}}
-                <thead class="d-table-header-group d-md-none">
-                    <tr>
-                        <th>Crianças</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($children as $child)
-                    <tr class="d-none d-md-table-row">
-                        <td>{{ $child->childname }}</td>
-                        <td class="text-secondary">{{ $child->childage }}</td>
-                        <td class="text-secondary">{{ $child->name }} - {{ $child->phone }}</td>
-                        <td class="text-secondary">@if(empty($child->checkin_date)) Sem Checkin @else Checkin @endif
-                        </td>
-                        <td>{{ $child->checkin_date }}</td>
-                        <td>{{ $child->checkout_date }}</td>
-                        <td>
+                    <td>
+                        @if($child->checkin_date)
+                        Checkin Realizado
+                        @else
 
-                            <button class="btn"
-                                wire:click="$dispatch('show-checkin', {register: {{ $child }}, type:'checkin'})">CheckIn</button>
-                            <button class="btn"
-                                wire:click="$dispatch('show-checkin', {register: {{ $child }}, type:'checkout'})">CheckOut</button>
-                            <button class="btn"
-                                wire:click="$dispatch('edit-checkin', {register: {{ $child }}})">Editar</button>
-                            <button class="btn"
-                                wire:click="$dispatch('delete-checkin', {register: {{ $child }}})">Excluir</button>
-                        </td>
-                    </tr>
+                        <button class="btn btn-primary w-100"
+                            wire:click="$dispatch('make-checkin', {register: {{ $child }}})">Fazer CheckIn</button>
+                        @endif
 
-                    <tr class="d-table-row d-md-none">
-                        <td colspan="7">
+                    </td>
+                </tr>
 
-                            <div class="">
-                                <div>
-                                    <strong>{{ $child->childname }}</strong>
-                                    <br>
-                                    <small class="text-secondary">
-                                        {{ $child->childage }} anos
-                                    </small>
-                                    <br>
-                                    <small>
-                                        Responsável: {{ $child->name }}
-                                    </small>
-                                    <br>
-                                    <small>
-                                        {{ $child->phone }}
-                                    </small>
-                                    <br>
-                                    <span class="badge
-                                        @if($child->checkin_date)
-                                            bg-success
-                                        @else
-                                            bg-secondary
-                                        @endif">
-
-                                        @if($child->checkin_date)
-                                            Check-in realizado
-                                        @else
-                                            Sem Check-in
-                                        @endif
-                                    </span>
-                                </div>
-
-                                <div class="mt-3">
-                                  <button class="btn-sm p-2 btn"
-                                wire:click="$dispatch('show-checkin', {register: {{ $child }}, type:'checkin'})">CheckIn</button>
-                            <button class="btn-sm p-2 btn"
-                                wire:click="$dispatch('show-checkin', {register: {{ $child }}, type:'checkout'})">CheckOut</button>
-                            <button class="btn-sm p-2 btn"
-                                wire:click="$dispatch('edit-checkin', {register: {{ $child }}})">Editar</button>
-                            <button class="btn-sm p-2 btn"
-                                wire:click="$dispatch('delete-checkin', {register: {{ $child }}})">Excluir</button>
-                                </div>
-
+                <tr class="d-md-none">
+                    <td>
+                        <div class="row">
+                            <div class="col-auto"><span class="avatar avatar-lg me-s3"
+                                    style="background-image: url({{ $child->photo() }})"> </span></div>
+                            <div class="col">
+                                <div>{{ $child->childname }}</div>
+<span
+                                    class="badge bg-{{ $child->bracelet() }} text-{{ $child->bracelet() }}-fg px-4">{{
+                                    $child->childage }} anos</span>
                             </div>
 
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                            <div class="col-auto text-end">
+                                <button class="btn btn-primary w-1ds00"
+                                    wire:click="$dispatch('make-checkin', {register: {{ $child }}})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                        <path d="M15 19l2 2l4 -4" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div> </div>
 
-        <div class="card-footer">
+                    </td>
+                </tr>
+
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="mt-3">
             {{ $children->links() }}
         </div>
 
     </div>
 
-    <livewire:checkin.checkin-show />
-    <livewire:checkin.edit-checkin />
+
+    <livewire:checkin.checkin />
+
 
     <livewire:checkin.qr-reader />
 
-    <x-modal.modal-delete />
+
 
 </div>

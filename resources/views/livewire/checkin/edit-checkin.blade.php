@@ -52,7 +52,7 @@
 
           <div class="col-sm-12 col-md-12">
             <label class="form-label">Igreja que a criança participa</label>
-            <x-form.input-text class="" type="data" name="form.childchurch" wire:model="form.childchurch" />
+            <x-form.input-text class="" name="form.childchurch" wire:model="form.childchurch" />
           </div>
 
           <div class="col-md-12">
@@ -68,10 +68,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn me-auto" wire:click="$dispatch('take-photo')">Tirar Foto</button>
         <button type="submit" class="btn  btn-primary">Salvar</button>
       </div>
   </form>
     </div>
   </div>
   @endif
+
+  <livewire:take-photo />
 </div>
