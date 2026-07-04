@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class WelcomeRegister extends Mailable implements ShouldQueue
@@ -27,6 +28,7 @@ class WelcomeRegister extends Mailable implements ShouldQueue
         $this->name = $name;
         $this->childname = $childname;
         $this->qrCode = base64_encode(QrCode::size(400)->margin(2)->generate($hash));
+        Storage::disk('public')->put("qrcodes/{$hash}.png",QrCode::format('png')->size(400)->margin(2)->generate($hash));
         $this->qrCodePath = storage_path("app/public/qrcodes/{$hash}.png");
     }
 
