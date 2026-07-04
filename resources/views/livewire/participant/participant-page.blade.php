@@ -96,10 +96,11 @@
         <td>{{ $child->checkout_date?->format('H:i') ?? '-' }}</td>
         <td>{{ $child->getTime() }}</td>
         <td>
-          <button class="btn" wire:click="$dispatch('show-participant', {register: {{ $child->id }}})">Ver</button>
-          <button class="btn" wire:click="$dispatch('edit-checkin', {register: {{ $child->id }}})">Editar</button>
-          <button class="btn" wire:click="$dispatch('delete-checkin', {register: {{ $child->id }}})">Excluir</button>
-          <button class="btn" wire:click="sendEmail({{ $child->id }})">Enviar QR</button>
+          <button class="btn btn-sm" wire:click="$dispatch('show-participant', {register: {{ $child->id }}})">Ver</button>
+          <button class="btn btn-sm" wire:click="$dispatch('edit-checkin', {register: {{ $child->id }}})">Editar</button>
+          <button class="btn btn-sm" wire:click="$dispatch('delete-checkin', {register: {{ $child->id }}})">Excluir</button>
+          <button class="btn btn-sm" wire:click="sendEmail({{ $child->id }})">Enviar QR</button>
+          <button class="btn btn-sm" wire:click="print({{ $child->id }})">Imprimir</button>
         </td>
       </tr>
       @endforeach

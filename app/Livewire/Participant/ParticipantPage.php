@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Participant;
 
+use App\Actions\PrintLabel;
 use App\Mail\WelcomeRegister;
 use App\Models\Register;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +47,10 @@ class ParticipantPage extends Component
                 $register->hash // O ID que a sua impressora MPT vai ler depois!
             )
         );
+    }
+
+    public function print(Register $register) {
+        PrintLabel::run($register);
     }
 
     public function updatingSearch()
