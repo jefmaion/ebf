@@ -25,10 +25,9 @@ class PrintLabel
     }
 
     public static function raw(Register $register) {
-        return "\x1B\x21\x00". str_repeat("-", 32) . "\n" .
+        return  "\x1B\x21\x00". str_repeat("-", 32) . "\n" .
             $register->childShortName() . " ({$register->childage})\n" .
             "Resp: {$register->respShortName()} ({$register->phone})\n" .
-
-            ""; // corte
+            "\x1D\x56\x41\x10"; // corte
     }
 }
