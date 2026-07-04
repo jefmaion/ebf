@@ -28,7 +28,7 @@ class PrintLabel
         return  "\x1B\x21\x00".
             $register->childShortName() . " ({$register->childage})\n" .
             "Resp: {$register->respShortName()} ({$register->phone})\n" .
-             str_repeat("-", 32) . "\n" .
+             str_repeat("-", 32).
             "\x1D\x56\x41\x10"; // corte
     }
 }
