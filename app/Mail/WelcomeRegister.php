@@ -17,6 +17,7 @@ class WelcomeRegister extends Mailable implements ShouldQueue
     public $name;
     public $childname;
     public $qrCode;
+    public $qrCodePath;
 
     /**
      * Create a new message instance.
@@ -26,6 +27,7 @@ class WelcomeRegister extends Mailable implements ShouldQueue
         $this->name = $name;
         $this->childname = $childname;
         $this->qrCode = base64_encode(QrCode::size(400)->margin(2)->generate($hash));
+        $this->qrCodePath = storage_path("app/public/qrcodes/{$hash}.png");
     }
 
     /**

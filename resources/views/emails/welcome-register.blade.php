@@ -25,7 +25,7 @@
 
         <!-- Exibição do QR Code Gerado -->
         <div style="text-align: center; margin: 30px 0;">
-            <img src="data:image/png;base64,{{ $qrCode }}">
+            <img src="{{ $message->embed($qrCodePath) }}" alt="QR Code">
             <p style="font-size: 12px; color: #718096; margin-top: 5px;">Este é o código exclusivo do participante.</p>
         </div>
 
