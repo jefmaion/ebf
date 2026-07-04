@@ -1,7 +1,54 @@
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qz-tray@2.2.4/qz-tray.js"></script>
 <script>
 
     window.cameraInUse = false;
+
+    document.addEventListener('livewire:init', async () => {
+
+        try {
+            await qz.websocket.connect();
+            console.log("QZ Tray conectado");
+            const printer = await qz.printers.find();
+            console.log(printer);
+
+
+
+
+        } catch (e) {
+            console.error("Erro QZ Tray:", e);
+        }
+
+
+
+    });
+
+    window.addEventListener('print-cupom', (event) => {
+    printCupom(event.detail.cupom);
+});
+
+    function printCupom(cupom) {
+
+    const config = qz.configs.create("POS58");
+
+    const data = [
+        {
+            type: 'raw',
+            format: 'plain',
+            data: `
+====================
+${cupom.titulo}
+--------------------
+${cupom.cliente}
+====================
+`
+        },
+        "\x1D\x56\x41\x10" // corte
+    ];
+
+    qz.print(config, data);
+}
+
 
     window.addEventListener('theme-updated', (params) => {
             document.documentElement.setAttribute('data-bs-theme', params.detail.theme)

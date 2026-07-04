@@ -118,5 +118,101 @@
 <livewire:checkin.edit-checkin />
 <livewire:participant.participant-print />
 
+@script
+<script>
+    window.addEventListener('print-cupom', (event) => {
 
+    const c = event.detail.cupom;
+
+    const html = `
+        <html>
+        <head>
+            <style>
+
+                /* 🔥 TAMANHO REAL DA ETIQUETA */
+                @page {
+                    size: 58mm 30mm;
+                    margin: 0;
+                }
+
+                body {
+                    margin: 0;
+                    padding: 0;
+                    width: 58mm;
+                    height: 30mm;
+                    font-family: monospace;
+                    overflow: hidden;
+                }
+
+                /* container principal */
+                .cupom {
+                    width: 58mm;
+                    height: 30mm;
+                    box-sizing: border-box;
+
+                    padding: 2mm;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    font-size: 10px;
+                    line-height: 1.2;
+                }
+
+                .titulo {
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 11px;
+
+                    /* evita estourar altura */
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .cliente {
+                    margin-top: 2mm;
+                    text-align: center;
+
+                    font-size: 9px;
+
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                hr {
+                    border: none;
+                    border-top: 1px dashed #000;
+                    margin: 2mm 0;
+                }
+
+            </style>
+        </head>
+
+        <body onload="window.print(); setTimeout(() => window.close(), 300);">
+
+            <div class="cupom">
+
+                <div class="titulo">${c.titulo}</div>
+
+                <hr>
+
+                <div class="cliente">${c.cliente}</div>
+
+            </div>
+
+        </body>
+        </html>
+    `;
+
+    const w = window.open('', '_blank');
+
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+});
+</script>
+@endscript
 </div>
