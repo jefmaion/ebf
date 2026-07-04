@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -35,6 +36,12 @@ class UserPage extends Component
         $this->user = null;
         $this->dispatch('hide-modal', modal:'modal-delete');
         $this->refresh();
+    }
+
+    public function sendEmail(User $user) {
+        Password::sendResetLink([
+            'email' => $user->email,
+        ]);
     }
 
     public function render()

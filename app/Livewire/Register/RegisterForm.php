@@ -19,7 +19,7 @@ class RegisterForm extends Component
 
     public FormRegister $form;
 
-    public $max = 500;
+    public $max = 125;
     public $canRegister = true;
 
     public $next = 2;

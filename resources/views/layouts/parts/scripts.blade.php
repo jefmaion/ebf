@@ -8,8 +8,6 @@
         try {
             await qz.websocket.connect();
             console.log("QZ Tray conectado");
-            const printer = await qz.printers.find();
-            console.log(printer);
         } catch (e) {
             console.error("Erro QZ Tray:", e);
         }

@@ -12,7 +12,7 @@
                   <div class="btn-list">
                   <a href="#" class="btn btn-primary btn-5 d-none d-sm-inline-block" wire:click="$dispatch('create-user')">
 
-                    
+
                     Novo Usuario
                   </a>
                   <a href="#" class="btn bg-purple btn-6 d-sm-none btn-icon" wire:click="$dispatch('create-user')">
@@ -50,10 +50,11 @@
                           <td>
                             {{ $user->email }}
                           </td>
-                         
+
                           <td>
                               <button class="btn" wire:click="$dispatch('update-user', {user: {{ $user->id }}})">Editar</button>
                               <button class="btn" wire:click="$dispatch('delete-user', {user: {{ $user->id }}})">Excluir</button>
+                              <button class="btn" wire:click="sendEmail({{$user->id}})">Resetar e enviar senha de acesso</button>
                           </td>
                         </tr>
                         @endforeach
@@ -67,7 +68,7 @@
     </div>
 
     <livewire:user.user-form />
-    
+
     <x-modal.modal-delete />
 
 </div>

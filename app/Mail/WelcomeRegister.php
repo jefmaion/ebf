@@ -38,7 +38,7 @@ class WelcomeRegister extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Inscrição Confirmada! Bem-vindo ao nosso Evento',
+            subject: 'EBF 2026 - Inscrição Confirmada!',
         );
     }
 
