@@ -57,6 +57,18 @@ class ParticipantPage extends Component
 
     }
 
+    public function printAll() {
+        $data = null;
+
+        foreach(Register::orderBy('childname', 'asc')->get() as $register) {
+            $data .= PrintLabel::raw($register);
+        }
+
+
+
+        $this->dispatch('print-cupom', data: $data);
+    }
+
     public function updatingSearch()
     {
         $this->resetPage(); // Força o Livewire a voltar para a página 1

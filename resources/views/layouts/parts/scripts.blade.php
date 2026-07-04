@@ -1,20 +1,15 @@
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+@if (request()->routeIs('participant'))
+
 <script src="https://cdn.jsdelivr.net/npm/qz-tray@2.2.4/qz-tray.js"></script>
 <script>
-
-    window.cameraInUse = false;
-
-    document.addEventListener('livewire:init', async () => {
+  document.addEventListener('livewire:init', async () => {
 
         try {
             await qz.websocket.connect();
             console.log("QZ Tray conectado");
             const printer = await qz.printers.find();
             console.log(printer);
-
-
-
-
         } catch (e) {
             console.error("Erro QZ Tray:", e);
         }
@@ -42,6 +37,16 @@
 
     qz.print(config, data);
 }
+
+</script>
+@endif
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<script>
+
+    window.cameraInUse = false;
+
 
 
     window.addEventListener('theme-updated', (params) => {

@@ -39,7 +39,7 @@
 
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <!-- BEGIN NAVBAR MENU -->
-            
+
             <ul class="navbar-nav pt-lg-3">
                 @foreach($sidebarMenu as $title => $item)
 
@@ -47,10 +47,10 @@
                     <li class="nav-item nav-header ms-3 my-2"><small>{{ strtoupper($title) }}</small></li>
                     @continue
                 @endif
-               
+
                 <li class="nav-item {{ $item['active'] ? 'active' :  '' }} @if(isset($item['submenu'])) dropdown @endif">
                     <a  class="nav-link  @if(isset($item['submenu'])) dropdown-toggle @endif"  @if(isset($item['submenu'])) href="#navbar-{{ $title }}"
-                        data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" @else wire:navigate href="{{ ($item['route']) ? route($item['route']) : '#' }}" @endif>
+                        data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" @else  href="{{ ($item['route']) ? route($item['route']) : '#' }}" @endif>
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             {!! $item['icon'] !!}
                         </span>
@@ -62,12 +62,12 @@
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 @foreach($item['submenu'] as $sub1Title => $sub1)
-                               
+
                                 @if(isset($sub1['submenu']))
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ $sub1['active'] ? 'show' :  ''}}" href="#sidebar-{{ $sub1Title }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
                                             {!! $sub1['icon'] !!}
-                                            {{ $sub1Title }} 
+                                            {{ $sub1Title }}
                                         </a>
                                         <div class="dropdown-menu {{ $sub1['active'] ? 'show' :  ''}}">
                                             @foreach($sub1['submenu'] as $sub3Title => $sub3)
@@ -82,7 +82,7 @@
                                 @else
                                     <a wire:navigate class="dropdown-item {{ $sub1['active'] ? 'active' :  '' }}" href="{{ ($sub1['route']) ? route($sub1['route']) : '#' }}">
                                         {!! $sub1['icon'] !!}
-                                        {{ $sub1Title }} 
+                                        {{ $sub1Title }}
                                         @if(isset($sub1['tag']))
                                             <span class="badge badge-sm {{ $sub1['tag']['color'] }}-lt text-uppercase ms-auto">{{ $sub1['tag']['label'] }}</span>
                                         @endif
