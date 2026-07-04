@@ -19,7 +19,7 @@
 
     <script>
         document.addEventListener('livewire:init', () => {
-
+             window.cameraInUse = false;
             let scanner = null;
             let isScanning = false;
 

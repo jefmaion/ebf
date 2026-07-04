@@ -25,7 +25,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Fechar</button>
+            <button type="button" class="btn me-auto"  wire:click="close">Fechar</button>
             <button type="button" class="btn w-50 btn-primary" id="btn-capturar-foto">Tirar Foto</button>
         </div>
     </x-modal.modal>
@@ -69,7 +69,9 @@
             const modalElement = document.getElementById('modal-take-photo');
             let stream = null;
 
-            modalElement.addEventListener('shown.bs.modal', () => {
+             window.addEventListener('show-modal', (event) => {
+                if (event.detail.modal !== 'modal-take-photo') return;
+            // modalElement.addEventListener('shown.bs.modal', () => {
                 // Aguarda 250ms (tempo exato do fade do Bootstrap) para dar o start na câmera
                 setTimeout(async () => {
                     const video = document.getElementById('webcam');
@@ -141,12 +143,15 @@
 
                 // Envia a foto quadrada para o backend do Livewire
                 @this.setPhoto(fotoBase64);
+
+
             };
         }, 50);
             });
 
             // Desliga a câmera e o led físico assim que iniciar o fechamento do modal
-            modalElement.addEventListener('hide-modal', () => {
+            window.addEventListener('hide-modal', (event) => {
+                if (event.detail.modal !== 'modal-take-photo') return;
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;

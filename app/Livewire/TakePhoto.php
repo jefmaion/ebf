@@ -22,8 +22,12 @@ class TakePhoto extends Component
         $photo = preg_replace('#^data:image/\w+;base64,#i', '', $photo);
         // $decodedPhoto = base64_decode($photo);
 
-        
+
         $this->dispatch('photo-result', photo:$photo);
+        $this->dispatch('hide-modal', modal: 'modal-take-photo');
+    }
+
+    public function close() {
         $this->dispatch('hide-modal', modal: 'modal-take-photo');
     }
 
