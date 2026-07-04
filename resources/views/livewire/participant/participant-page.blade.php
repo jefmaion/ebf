@@ -23,7 +23,7 @@
           <div class="subheader">Participantes</div>
         </div>
         <div class="h1 mb-3">{{ $box['all'] }}</div>
-        
+
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
           <div class="subheader">Presentes</div>
         </div>
         <div class="h1 mb-3">{{ $box['presents'] }}</div>
-        
+
       </div>
     </div>
   </div>
@@ -47,7 +47,7 @@
           <div class="subheader">Ausentes</div>
         </div>
         <div class="h1 mb-3">{{ $box['absense'] }}</div>
-        
+
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
       <tr class="{{ $child->bracelet() }}">
         <td>
           <div class="d-flex py-1 align-items-center">
-            <span class="avatar avatar-2 me-2" style="background-image: url({{ $child->photo() }})"></span> 
+            <span class="avatar avatar-2 me-2" style="background-image: url({{ $child->photo() }})"></span>
             <div class="flex-fill">
               <div class="font-weight-medium">{{ $child->childname }}</div>
               <div class="text-secondary">{{ $child->childage }} anos - {{ $child->getGender() }}</div>
@@ -99,6 +99,7 @@
           <button class="btn" wire:click="$dispatch('show-participant', {register: {{ $child->id }}})">Ver</button>
           <button class="btn" wire:click="$dispatch('edit-checkin', {register: {{ $child->id }}})">Editar</button>
           <button class="btn" wire:click="$dispatch('delete-checkin', {register: {{ $child->id }}})">Excluir</button>
+          <button class="btn" wire:click="sendEmail({{ $child->id }})">Enviar QR</button>
         </td>
       </tr>
       @endforeach
@@ -111,10 +112,10 @@
 
 </div>
 
+<x-modal.modal-delete />
 <livewire:participant.participant-show />
 <livewire:checkin.edit-checkin />
 <livewire:participant.participant-print />
 
-<x-modal.modal-delete />
 
 </div>

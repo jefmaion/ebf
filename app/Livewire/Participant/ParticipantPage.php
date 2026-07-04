@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Participant;
 
+use App\Mail\WelcomeRegister;
 use App\Models\Register;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -34,6 +36,16 @@ class ParticipantPage extends Component
         $this->register = null;
         $this->dispatch('hide-modal', modal:'modal-delete');
         $this->refresh();
+    }
+
+    public function sendEmail(Register $register) {
+        Mail::to($register->email)->send(
+            new WelcomeRegister(
+                $register->name,
+                $register->childname,
+                $register->hash // O ID que a sua impressora MPT vai ler depois!
+            )
+        );
     }
 
     public function updatingSearch()
