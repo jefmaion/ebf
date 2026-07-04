@@ -1,5 +1,5 @@
-<div wire:ignore.self class="modal modal-blur fade" id="modal-take-photo" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modsal-lg modal-dialogs-centered" role="document">
+<div>
+    <x-modal.modal id="modal-take-photo">
         <div class="modal-content" style="overflow: hidden;">
             <div class="modal-header">
                 <h5 class="modal-title">Fazer Checkin</h5>
@@ -28,86 +28,85 @@
             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Fechar</button>
             <button type="button" class="btn w-50 btn-primary" id="btn-capturar-foto">Tirar Foto</button>
         </div>
-    </div>
-</div>
+    </x-modal.modal>
 
-<style>
-    .camera-focus-guide {
-        position: absolute;
-        /* Define o tamanho do quadrado guia */
-        width: 260px;
-        height: 260px;
+    <style>
+        .camera-focus-guide {
+            position: absolute;
+            /* Define o tamanho do quadrado guia */
+            width: 260px;
+            height: 260px;
 
-        /* Cria uma borda pontilhada/tracejada verde estilo alvo */
-        border: 3px dashed #2fb344;
-        border-radius: 16px;
+            /* Cria uma borda pontilhada/tracejada verde estilo alvo */
+            border: 3px dashed #2fb344;
+            border-radius: 16px;
 
-        /* Garante o alinhamento perfeito no centro do container */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+            /* Garante o alinhamento perfeito no centro do container */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
 
-        /* Adiciona uma sombra interna leve para destacar o rosto */
-        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+            /* Adiciona uma sombra interna leve para destacar o rosto */
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
 
-        /* Impede que o clique do mouse no quadrado atrapalhe o HTML */
-        pointer-events: none;
-        z-index: 10;
-    }
+            /* Impede que o clique do mouse no quadrado atrapalhe o HTML */
+            pointer-events: none;
+            z-index: 10;
+        }
 
-    /* Efeito opcional: Deixa os cantos ligeiramente iluminados */
-    .camera-focus-guide::before {
-        content: '';
-        position: absolute;
-        top: -10px; left: -10px; right: -10px; bottom: -10px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 22px;
-    }
-</style>
+        /* Efeito opcional: Deixa os cantos ligeiramente iluminados */
+        .camera-focus-guide::before {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 22px;
+        }
+    </style>
 
-<script>
-    document.addEventListener('livewire:init', () => {
-        const modalElement = document.getElementById('modal-take-photo');
-        let stream = null;
+    <script>
+        document.addEventListener('livewire:init', () => {
+            const modalElement = document.getElementById('modal-take-photo');
+            let stream = null;
 
-        modalElement.addEventListener('shown.bs.modal', () => {
+            modalElement.addEventListener('shown.bs.modal', () => {
                 // Aguarda 250ms (tempo exato do fade do Bootstrap) para dar o start na câmera
-            setTimeout(async () => {
-                const video = document.getElementById('webcam');
-                const btnCapturar = document.getElementById('btn-capturar-foto');
-                const canvas = document.getElementById('canvas');
+                setTimeout(async () => {
+                    const video = document.getElementById('webcam');
+                    const btnCapturar = document.getElementById('btn-capturar-foto');
+                    const canvas = document.getElementById('canvas');
 
-                if (!video) return;
+                    if (!video) return;
 
-                try {
+                    try {
                         // Solicita permissão ao hardware da webcam
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: {
-                            width: { ideal: 1280 },
-                            height: { ideal: 720 },
-                            facingMode: { ideal: "environment" }
-                        },
-                        audio: false
-                    });
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: { ideal: 1280 },
+                                height: { ideal: 720 },
+                                facingMode: { ideal: "environment" }
+                            },
+                            audio: false
+                        });
 
-                    video.srcObject = stream;
+                        video.srcObject = stream;
 
                         // Garante que o player rode depois que o stream foi injetado
-                    await video.play();
-                } catch (err) {
-                    console.error("Erro ao acessar a câmera: ", err);
-                    alert("Não foi possível ativar a câmera. Verifique se o site roda em 'localhost' ou possui 'https://'.");
-                }
+                        await video.play();
+                    } catch (err) {
+                        console.error("Erro ao acessar a câmera: ", err);
+                        alert("Não foi possível ativar a câmera. Verifique se o site roda em 'localhost' ou possui 'https://'.");
+                    }
 
                     // Configura o evento do botão de capturar a foto
-                btnCapturar.onclick = () => {
-                 if (!stream) return;
+                    btnCapturar.onclick = () => {
+                       if (!stream) return;
 
-                 const context = canvas.getContext('2d');
+                       const context = canvas.getContext('2d');
 
                 // 1. Descobre o tamanho real do vídeo sendo exibido na tela
-                 const videoWidth = video.videoWidth;
-                 const videoHeight = video.videoHeight;
+                       const videoWidth = video.videoWidth;
+                       const videoHeight = video.videoHeight;
 
                 // 2. Define o tamanho do quadrado de corte proporcional ao tamanho real do vídeo
                 // Como o vídeo geralmente é 640x480, vamos cortar um quadrado baseado na menor dimensão (altura)
@@ -143,18 +142,18 @@
                 // Envia a foto quadrada para o backend do Livewire
                 @this.setPhoto(fotoBase64);
             };
-            }, 50);
-        });
+        }, 50);
+            });
 
             // Desliga a câmera e o led físico assim que iniciar o fechamento do modal
-        modalElement.addEventListener('hide.bs.modal', () => {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-            }
-            const video = document.getElementById('webcam');
-            if (video) video.srcObject = null;
+            modalElement.addEventListener('hide.bs.modal', () => {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+                const video = document.getElementById('webcam');
+                if (video) video.srcObject = null;
+            });
         });
-    });
-</script>
+    </script>
 </div>

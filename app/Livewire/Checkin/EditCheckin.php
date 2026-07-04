@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Checkin;
 
+use App\Actions\SaveUserPhoto;
 use App\Livewire\Forms\Register\FormRegister;
 use App\Models\Register;
 use Carbon\Carbon;
@@ -29,6 +30,15 @@ class EditCheckin extends Component
         $this->dispatch('checkin-changed');
         $this->dispatch('hide-modal', modal:'modal-edit-checkin');
     }
+
+     #[On('photo-result')]
+    public function setPhoto($photo)
+    {   
+        SaveUserPhoto::run($this->register, $photo);
+        $this->register->refresh();
+        $this->dispatch('$refresh');
+    }
+
 
     public function getAge() {
         $this->form->childage = Carbon::parse($this->form->childbirthdate)->age;

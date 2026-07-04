@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Register extends BaseModel
@@ -14,6 +15,12 @@ class Register extends BaseModel
         'checkin_date' => 'datetime',
         'checkout_date' => 'datetime',
         'childbirthdate' => 'date',
+    ];
+
+
+    protected $_gender = [
+        'M' => 'Masculino',
+        'F' => 'Feminino',
     ];
 
     /** @use HasFactory<\Database\Factories\RegisterFactory> */
@@ -63,5 +70,17 @@ class Register extends BaseModel
         $last = end($parts);
 
         return $first .' '.$last;
+    }
+
+    public function getTime() {
+         $inicio = Carbon::parse($this->checkin_date);
+        $fim = Carbon::parse($this->checkout_date ?? now());
+
+        // Retorna no formato de relógio "02:30"
+        return $inicio->diff($fim)->format('%H:%I');
+    }
+
+    public function getGender() {
+        return $this->_gender[$this->childgender];
     }
 }

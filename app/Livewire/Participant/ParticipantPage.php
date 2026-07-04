@@ -36,10 +36,23 @@ class ParticipantPage extends Component
         $this->refresh();
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage(); // Força o Livewire a voltar para a página 1
+    }
+
     public function render()
     {
+
+
         return view('livewire.participant.participant-page', [
-            'children' => Register::whereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(10)
+            'children' => Register::whereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(10),
+
+            'box' => [
+                'all' => Register::count(),
+                'presents' => Register::whereNotNull('checkin_date')->count(),
+                'absense' => Register::whereNull('checkin_date')->count()
+            ]
         ]);
     }
 }

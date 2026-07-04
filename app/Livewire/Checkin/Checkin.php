@@ -3,6 +3,7 @@
 namespace App\Livewire\Checkin;
 
 use App\Actions\PrintLabel;
+use App\Actions\SaveUserPhoto;
 use App\Models\Register;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
@@ -36,37 +37,13 @@ class Checkin extends Component
     {
 
 
-        // Aqui você já tem acesso ao $this->fotoCapturada preenchido
+        SaveUserPhoto::run($this->register, $photo);
+        
+        $this->register->refresh();
 
+        $this->takePhoto = false;
 
-            // 1. Remove o cabeçalho do Base64 (ex: "data:image/jpeg;base64,")
-            // Deixando apenas a string de dados pura
-            $dadosImagem = preg_replace('#^data:image/\w+;base64,#i', '', $photo);
-
-            // 2. Decodifica a string Base64 transformando-a em bytes reais da imagem
-            $imagemDecodificada = base64_decode($dadosImagem);
-
-            // 3. Define um nome único para o arquivo (ex: usando o ID ou UUID)
-            $nomeArquivo = "checkins/".$this->register->id.time().".jpg";
-
-
-            if(!empty($this->register->photo)) {
-                Storage::disk('public')->delete($this->register->photo);
-            }
-
-            // 4. Salva fisicamente no disco 'public' (storage/app/public/checkins/...)
-            Storage::disk('public')->put($nomeArquivo, $imagemDecodificada);
-
-
-            $this->register->update([
-                'photo' => $nomeArquivo, // Salvando a string Base64 direto na tabela
-            ]);
-
-            $this->register->refresh();
-
-            $this->takePhoto = false;
-
-            $this->dispatch('$refresh');
+        $this->dispatch('$refresh');
 
     }
 

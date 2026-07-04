@@ -1,80 +1,39 @@
-<div wire:ignore.self class="modal modal-blur fade" id="modal-edit-checkin" tabindex="-1" role="dialog" aria-hidden="true">
-    @if($register)
-  <div class="modal-dialog modasl-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <form wire:submit="save()">
-
-      <div class="modal-body">
-
-        <h1>Editar Registro</h1>
-        <hr>
-
-        <!-- <img src="{{ asset('storage/qrcodes/'.$register->hash.'.png') }}" class="mb-4" width="200px" alt="QR Code"> -->
-
-        <div class="row row-cards mb-3">
-          <div class="col-md-12">
-            <label class="form-label ('mainName') }}">Responsável</label>
-            <x-form.input-text class="" type="text" name="form.name" wire:model="form.name" />
-          </div>
-
-          <div class="col-sm-12 col-md-12">
-            <label class="form-label ('mainEmail') }}">Email </label>
-            <x-form.input-text class="" type="data" name="form.email" wire:model="form.email" />
-            <span class="mt-1"></span>
-
-          </div>
 
 
-          <div class="col-sm-12 col-md-12">
-            <label class="form-label ('mainPhone') }}">Telefone/WhatsApp</label>
-            <x-form.input-text class="" type="data" name="form.phone" wire:model="form.phone" />
-          </div>
-
-        </div>
-
-        <div class="row row-cards mb-3">
-          <div class="col-md-12">
-            <label class="form-label">Nome da criança</label>
-            <x-form.input-text class="" type="text" name="form.childname" wire:model="form.childname" />
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <label class="form-label">Data de Nascimento</label>
-            <x-form.input-text class="" type="date" name="form.childbirthdate" wire:model="form.childbirthdate" wire:blur="getAge()" />
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <label class="form-label">Idade</label>
-            <x-form.input-text class="" type="number" name="form.childage" wire:model="form.childage" />
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <label class="form-label">Sexo</label>
-            <x-form.input-text class="" type="data" name="form.childgender" wire:model="form.childgender" />
-          </div>
-
-          <div class="col-sm-12 col-md-12">
-            <label class="form-label">Igreja que a criança participa</label>
-            <x-form.input-text class="" name="form.childchurch" wire:model="form.childchurch" />
-          </div>
-
-          <div class="col-md-12">
-              <label class="form-label">A criança possui alguma alergia ou restrição alimentar? Se sim, qual?</label>
-                <textarea class="form-control" rows="4" type="data" name="form.food_restriction" wire:model="form.food_restriction"></textarea>
-          </div>
-
-
-
-        
-      </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn me-auto" wire:click="$dispatch('take-photo')">Tirar Foto</button>
-        <button type="submit" class="btn  btn-primary">Salvar</button>
-      </div>
-  </form>
-    </div>
-  </div>
-  @endif
-
+<x-modal.modal id="modal-edit-checkin">
   <livewire:take-photo />
-</div>
+  @if($register)
+ <form wire:submit="save()">
+        <div class="modal-header">
+                <h5 class="modal-title">Editar Participante</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+
+                <div class="row">
+                  <div class="col"><x-general.resp-part :register="$register" /></div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-purple " wire:click="$dispatch('take-photo')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=""><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+                </button>
+                  </div>
+                </div>
+                
+
+
+              </div>
+            <div class="modal-body">
+          
+          @include('livewire.checkin.checkin-form')
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Fechar</button>
+          
+          <button type="submit" class="btn  btn-primary">Salvar</button>
+        </div>
+      </form>
+     
+@endif
+       
+
+</x-modal.modal>

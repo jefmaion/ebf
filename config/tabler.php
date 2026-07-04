@@ -18,13 +18,25 @@ return [
 
         'Bem-Vindo' => 'nav-header',
 
-        'Participantes' => [
+      
+
+        'Checkin' => [
+            'route' => 'checkin',
+            'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
+        ],
+
+        'Checkout' => [
+            'route' => 'checkout',
+            'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
+        ],
+
+      'Participantes' => [
             'route' => 'participant',
             'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
         ],
 
-        'Checkin' => [
-            'route' => 'checkin',
+        'Usuários' => [
+            'route' => 'users',
             'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
         ],
 
