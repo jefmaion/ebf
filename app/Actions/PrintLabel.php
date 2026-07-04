@@ -3,6 +3,8 @@
 namespace App\Actions;
 
 use App\Models\Register;
+use Mike42\Escpos\PrintConnectors\DummyPrintConnector;
+use Mike42\Escpos\PrintConnectors\RawbtPrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
 
@@ -20,5 +22,13 @@ class PrintLabel
         $printer->text(str_repeat("-", 32) . "\n");
         $printer->cut();
         $printer->close();
+    }
+
+    public static function raw(Register $register) {
+        return "\x1B\x21\x00". str_repeat("-", 32) . "\n" .
+            $register->childShortName() . " ({$register->childage})\n" .
+            "Resp: {$register->respShortName()} ({$register->phone})\n" .
+
+            ""; // corte
     }
 }

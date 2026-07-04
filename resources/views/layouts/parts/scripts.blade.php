@@ -24,10 +24,10 @@
     });
 
     window.addEventListener('print-cupom', (event) => {
-    printCupom(event.detail.cupom);
+    printCupom(event.detail.data);
 });
 
-    function printCupom(cupom) {
+    function printCupom(info) {
 
     const config = qz.configs.create("POS58");
 
@@ -35,15 +35,9 @@
         {
             type: 'raw',
             format: 'plain',
-            data: `
-====================
-${cupom.titulo}
---------------------
-${cupom.cliente}
-====================
-`
-        },
-        "\x1D\x56\x41\x10" // corte
+            data: info
+        }
+
     ];
 
     qz.print(config, data);

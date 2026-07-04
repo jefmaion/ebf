@@ -52,12 +52,8 @@ class ParticipantPage extends Component
     public function print(Register $register) {
         // PrintLabel::run($register);
 
-        $cupom = [
-            'titulo' => $register->childShortName() .  " (" . $register->childage . ' anos)',
-            'cliente' => "Resp: " . $register->respShortName() . ' (' . $register->phone . ')'
-        ];
-
-        $this->dispatch('print-cupom', cupom: $cupom);
+        $data = PrintLabel::raw($register);
+        $this->dispatch('print-cupom', data: $data);
 
     }
 
