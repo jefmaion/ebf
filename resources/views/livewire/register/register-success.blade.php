@@ -8,11 +8,15 @@
         <path d="M9 12l2 2l4 -4"></path>
       </svg>
       <h1>Cadastro realizado com sucesso!</h1>
+     <p>Enviamos um e-mail com as informações e o QR Code para o seu check-in no evento. Apresente esse QR Code no dia do evento para agilizar sua entrada.</p>
+
+<p>Caso não encontre o e-mail na caixa de entrada, verifique também as pastas <strong>Lixo Eletrônico</strong> ou <strong>Spam</strong>.</p>
+
       <div class="text-secondary h3">
         Aguardamos vocês no dia do evento!
       </div>
 
       <a href="{{ route('register-form') }}">Nova Inscrição</a>
-    </div>      
+    </div>
   </div>
 </div>
