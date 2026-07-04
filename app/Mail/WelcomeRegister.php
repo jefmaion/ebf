@@ -25,7 +25,7 @@ class WelcomeRegister extends Mailable implements ShouldQueue
     {
         $this->name = $name;
         $this->childname = $childname;
-        $this->qrCode = QrCode::size(400)->margin(2)->generate($hash);
+        $this->qrCode = base64_encode(QrCode::size(400)->margin(2)->generate($hash));
     }
 
     /**

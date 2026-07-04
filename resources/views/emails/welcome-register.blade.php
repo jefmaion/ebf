@@ -7,13 +7,13 @@
 <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; color: #333;">
 
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        
+
         <h2 style="color: #4A5568; text-align: center;">¡Inscrição Confirmada com Sucesso! 🎉</h2>
-        
+
         <p>Olá, <strong>{{ $name }}</strong>,</p>
-        
+
         <p>Seja muito bem-vindo! A inscrição da criança <strong>{{ $childname }}</strong> foi realizada com sucesso em nosso evento.</p>
-        
+
         <div style="background-color: #EDF2F7; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <p style="margin: 0; font-weight: bold; color: #2D3748; text-align: center;">
                 ⚠️ INFORMAÇÃO IMPORTANTE PARA O DIA DO EVENTO:
@@ -25,7 +25,7 @@
 
         <!-- Exibição do QR Code Gerado -->
         <div style="text-align: center; margin: 30px 0;">
-            {!! $qrCode !!}
+            <img src="data:image/png;base64,{{ $qrCode }}">
             <p style="font-size: 12px; color: #718096; margin-top: 5px;">Este é o código exclusivo do participante.</p>
         </div>
 
@@ -34,7 +34,7 @@
         </p>
 
         <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 20px 0;">
-        
+
         <p style="text-align: center; font-size: 12px; color: #A0AEC0; margin: 0;">
             Mensagem automática enviada pelo Sistema de Inscrições da Igreja.
         </p>
