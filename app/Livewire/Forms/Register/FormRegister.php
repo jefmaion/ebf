@@ -51,7 +51,7 @@ class FormRegister extends Form
         if(empty($this->_step)) {
             return $rules;
         }
-        
+
         if(!isset($steps[$this->_step])) {
             return  [
                 'name' => 'required'
@@ -59,7 +59,7 @@ class FormRegister extends Form
         }
 
         return array_intersect_key($rules, array_flip($steps[$this->_step]));
-      
+
     }
 
      protected function messages()
@@ -105,25 +105,25 @@ class FormRegister extends Form
 
             'hash' => Str::uuid()
         ]);
-        
+
 
         // Storage::disk('public')->put("qrcodes/{$register->hash}.png",QrCode::format('png')->size(400)->margin(2)->generate($register->hash));
 
 
-        // Mail::to($register->email)->send(
-        //     new WelcomeRegister(
-        //         $register->name, 
-        //         $register->childname, 
-        //         $register->hash // O ID que a sua impressora MPT vai ler depois!
-        //     )
-        // );
+        Mail::to($register->email)->send(
+            new WelcomeRegister(
+                $register->name,
+                $register->childname,
+                $register->hash // O ID que a sua impressora MPT vai ler depois!
+            )
+        );
 
         return $register;
 
     }
 
     public function populate(Register $register) {
- 
+
 
         $this->register = $register;
 
