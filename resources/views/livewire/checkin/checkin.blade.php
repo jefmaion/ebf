@@ -26,7 +26,7 @@
              @if(!empty($register->food_restriction))
             <div class="modal-body text-center">
                 <p class="m-0"><strong>Restrição alimentar: </strong>{{ $register->food_restriction }}</p>
-                
+
             </div>
             @endif
             @endif
@@ -39,7 +39,7 @@
                 </button>
                 <button type="button" class="btn w-50 btn-primary" wire:click="doCheckin()">Realizar CheckIn</button>
             </div>
-        @endif    
+        @endif
         <livewire:take-photo />
 </x-modal.modal>
 

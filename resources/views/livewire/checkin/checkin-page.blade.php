@@ -116,11 +116,12 @@
 
     </div>
 
+
+
 <livewire:checkin.qr-reader />
 <livewire:checkin.checkin />
 
 
-    
 
 
 

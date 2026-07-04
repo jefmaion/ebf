@@ -10,6 +10,7 @@ class QrReader extends Component
 {
 
     public ?Register $register = null;
+    public $message = null;
 
     #[On('show-reader')]
     public function show() {
@@ -20,10 +21,18 @@ class QrReader extends Component
         $this->dispatch('hide-modal', modal: 'qrModal');
     }
 
-    public function qrCodeRead($code){
-        $this->register = Register::where('hash', $code)->first();
-        $this->dispatch('qrcode-loaded', register: $this->register);
-        $this->dispatch('hide-modal', modal: 'qrModal');
+    #[On('qr-code-read')]
+    public function qrCodeReasd($code){
+
+        $register = Register::where('hash', $code)->first();
+
+        if (!$register) {
+            $this->dispatch('qr-invalid');
+            return;
+        }
+        $this->close();
+        $this->dispatch('qrcode-loaded', register: $register->id);
+
     }
 
     public function render()

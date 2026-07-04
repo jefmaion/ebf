@@ -19,8 +19,8 @@ class Checkin extends Component
     public $takePhoto = false;
 
 
-    #[On('make-checkin')]
     #[On('qrcode-loaded')]
+    #[On('make-checkin')]
     public function select(Register $register) {
         $this->register = $register;
         $this->dispatch('show-modal', modal:'modal-show-checkin');
@@ -38,7 +38,7 @@ class Checkin extends Component
 
 
         SaveUserPhoto::run($this->register, $photo);
-        
+
         $this->register->refresh();
 
         $this->takePhoto = false;

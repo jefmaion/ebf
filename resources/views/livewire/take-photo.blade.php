@@ -146,7 +146,7 @@
             });
 
             // Desliga a câmera e o led físico assim que iniciar o fechamento do modal
-            modalElement.addEventListener('hide.bs.modal', () => {
+            modalElement.addEventListener('hide-modal', () => {
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;
