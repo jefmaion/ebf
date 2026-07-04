@@ -14,6 +14,8 @@
 
         <p>Seja muito bem-vindo! A inscrição da criança <strong>{{ $childname }}</strong> foi realizada com sucesso em nosso evento.</p>
 
+         <p>O evento acontecerá no <strong>Sábado, dia 11/07/26 das 09:00 às 16:00</strong>. O checkin começará as <strong>08:30</strong></p>
+
         <div style="background-color: #EDF2F7; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <p style="margin: 0; font-weight: bold; color: #2D3748; text-align: center;">
                 ⚠️ INFORMAÇÃO IMPORTANTE PARA O DIA DO EVENTO:

@@ -1,6 +1,8 @@
 <div>
 
-  <h1 class="dissplay-4 text-center my-5">EBF - Igreja do Nazareno Vila Anchieta</h1>
+  <h1 class="dissplay-4 text-center my-ss5"><strong>EBF - Igreja do Nazareno Vila Anchieta</strong></h1>
+  <h2 class="dissplay-4 text-center my-s5">Sábado - 11/07/26 - Das 09:00 às 16:00</h2>
+  <h2 class="dissplay-4 text-center my-s5">(Checkin à partir as 08:30)</h2>
 
   @if($canRegister)
 
@@ -21,6 +23,9 @@
         <h1 class="m-0 ">Informações do Responsável</h1>
       </div>
       <div class="card-body">
+
+
+
         <div class="row row-cards mb-3">
           <div class="col-md-12">
             <label class="form-label h2 ('mainName') }}">Nome do Responsável</label>
@@ -49,6 +54,13 @@
         <h1 class="m-0 ">Dados da criança</h1>
       </div>
       <div class="card-body">
+
+
+         <div class="alert alert-warning alert-important">
+           <strong>Atenção:</strong> Menores de 6 anos deverão permanecer acompanhados, durante todo o evento, por um responsável maior de idade.;
+        </div>
+
+
         <div class="row row-cards mb-3">
           <div class="col-md-12">
             <label class="form-label h2 ('name') }}">Nome da criança</label>
