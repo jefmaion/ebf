@@ -16,8 +16,12 @@ class ParticipantPrint extends Component
     #[On('show-print')]
     public function show() {
         $this->dispatch('show-modal', modal:'modal-print');
+    }
 
-
+    public function selectAll() {
+        foreach(Register::all() as $register) {
+            $this->toPrint[]  =$register->id;
+        }
     }
 
     public function print() {
