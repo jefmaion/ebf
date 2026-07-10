@@ -7,7 +7,7 @@
                 <h5 class="modal-title">Fazer Checkin</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <a href="#" class="btn btn-primary btn-5 ms-auto" data-bs-dismiss="modal"
+              <a href="#" class="btn btn-primary btn-5 ms-auto"
                             wire:click="selectAll()">
                             <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
