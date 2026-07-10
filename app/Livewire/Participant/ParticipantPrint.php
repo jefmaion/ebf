@@ -25,7 +25,7 @@ class ParticipantPrint extends Component
     }
 
     public function print() {
-        $participants = Register::whereIn('id', $this->toPrint)->get();
+        $participants = Register::whereIn('id', $this->toPrint)->orderBy('childname', 'asc')->get();
         $data = null;
           foreach($participants as $register) {
             $data .= PrintLabel::raw($register);
