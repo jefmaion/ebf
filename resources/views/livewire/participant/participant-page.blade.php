@@ -78,7 +78,7 @@
                     <div class="modal-footer">
                         <a href="#" class="btn btn-link link-secondary btn-3" data-bs-dismiss="modal"> Cancel </a>
                         <a href="#" class="btn btn-primary btn-5 ms-auto" data-bs-dismiss="modal"
-                            wire:click='printAll()'>
+                            wire:click="$dispatch('show-print')">
                             <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -264,9 +264,10 @@
     </div>
 
     <x-modal.modal-delete />
+    <livewire:participant.participant-print />
     <livewire:participant.participant-show />
     <livewire:checkin.edit-checkin />
-    <livewire:participant.participant-print />
+
 
 
 

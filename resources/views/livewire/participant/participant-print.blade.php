@@ -19,7 +19,7 @@
               </table>
             <div class="modal-footer">
                 <button type="button" class="btn me-auto" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn w-50 btn-primary" wire:click="print()">Realizar CheckIn</button>
+                <button type="button" class="btn w-50 btn-primary" wire:click="print()">Imprimir</button>
             </div>
         </div>
     </div>

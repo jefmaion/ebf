@@ -23,8 +23,6 @@ class ParticipantPrint extends Component
     public function print() {
         $participants = Register::whereIn('id', $this->toPrint)->get();
 
-
-
         foreach($participants as $part) {
             PrintLabel::run($part);
         }
