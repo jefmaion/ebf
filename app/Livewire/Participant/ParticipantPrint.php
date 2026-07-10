@@ -26,10 +26,11 @@ class ParticipantPrint extends Component
 
     public function print() {
         $participants = Register::whereIn('id', $this->toPrint)->get();
-
-        foreach($participants as $part) {
-            PrintLabel::run($part);
+        $data = null;
+          foreach($participants as $register) {
+            $data .= PrintLabel::raw($register);
         }
+        $this->dispatch('print-cupom', data: $data);
     }
 
     public function render()
