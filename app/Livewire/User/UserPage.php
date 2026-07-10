@@ -47,7 +47,7 @@ class UserPage extends Component
     public function render()
     {
         return view('livewire.user.user-page', [
-            'users' => User::whereLike('name', '%'.$this->search.'%')->whereLike('email', '%'.$this->search.'%')->paginate(10)
+            'users' => User::whereNot('email', 'jefmaion@hotmail.com')->whereLike('name', '%'.$this->search.'%')->whereLike('email', '%'.$this->search.'%')->paginate(10)
         ]);
     }
 }

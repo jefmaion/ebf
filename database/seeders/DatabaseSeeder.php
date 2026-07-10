@@ -30,29 +30,29 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        // for($i=0;$i<=10;$i++) {
+        for($i=0;$i<=150;$i++) {
 
-        //     $birth = fake()->dateTimeBetween('-12 years', 'now')->format('Y-m-d');
-
-
-        //    Register::create([
-        //         'name'             => fake()->name(),
-        //         'email'            => fake()->unique()->safeEmail(),
-        //         'phone'            => fake()->cellphone(), // Gera formato (XX) 9XXXX-XXXX (se configurado pt_BR)
-        //         'childname'        => fake()->name(),
-        //         'childbirthdate'   => $birth,
-        //         'childage'         => Carbon::parse($birth)->age,
-        //         'childgender'      => fake()->randomElement(['M', 'F']),
-        //         'childchurch'      => fake()->company(),
-        //         'agree'            => true,                              // Aceite dos termos fixado em verdadeiro
-        //         'food_restriction' => fake()->randomElement(['Nenhuma', 'Lactose', 'Glúten', 'Amendoim']),
-        //         'hash'             => Str::uuid(),
-        //         'bracelet_color' => fake()->randomElement(['bg-purple-lt', 'bg-green-lt', 'bg-orange-lt']),
-        //     ]);
+            $birth = fake()->dateTimeBetween('-12 years', 'now')->format('Y-m-d');
 
 
+           Register::create([
+                'name'             => fake()->name(),
+                'email'            => fake()->unique()->safeEmail(),
+                'phone'            => fake()->cellphone(), // Gera formato (XX) 9XXXX-XXXX (se configurado pt_BR)
+                'childname'        => fake()->name(),
+                'childbirthdate'   => $birth,
+                'childage'         => Carbon::parse($birth)->age,
+                'childgender'      => fake()->randomElement(['M', 'F']),
+                'childchurch'      => fake()->company(),
+                'agree'            => true,                              // Aceite dos termos fixado em verdadeiro
+                'food_restriction' => fake()->randomElement(['Nenhuma', 'Lactose', 'Glúten', 'Amendoim']),
+                'hash'             => Str::uuid(),
+                'bracelet_color' => fake()->randomElement(['bg-purple-lt', 'bg-green-lt', 'bg-orange-lt']),
+            ]);
 
-        // }
+
+
+        }
 
     }
 }

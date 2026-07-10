@@ -5,10 +5,12 @@ namespace App\Livewire\Participant;
 use App\Actions\PrintLabel;
 use App\Mail\WelcomeRegister;
 use App\Models\Register;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Shuchkin\SimpleXLSXGen;
 
 class ParticipantPage extends Component
 {
@@ -74,17 +76,66 @@ class ParticipantPage extends Component
         $this->resetPage(); // Força o Livewire a voltar para a página 1
     }
 
+    public function export() {
+        $data = Register::select([
+            'registers.created_at as data_inscrição',
+             'childname as participante',
+             'childage as idade',
+             'childgender as sexo',
+             'childbirthdate as data_de_nascimento',
+             'registers.name as responsavel',
+             'phone as telefone_responsavel',
+             'registers.email as email_responsavel',
+             'childchurch as igreja',
+             'food_restriction as restrição_alimentar',
+             'checkin_date as hora_checkin',
+             'users.name as checkin_feito_por',
+             'checkout_date as hora_checkout',
+            'b.name as checkout_feito_por'])
+        ->leftJoin('users', 'users.id', '=', 'registers.user_id_checkin')
+        ->leftJoin('users as b', 'b.id', '=', 'registers.user_id_checkout')
+        ->orderBy('registers.childname', 'asc')
+        ->get()->toArray();
+
+        if(empty($data)) return;
+
+        $headers = array_keys($data[0]);
+
+        // 3. Monte a matriz final: o cabeçalho é a primeira linha, seguido pelos dados
+        $data = array_merge([$headers], $data);
+
+
+        $file = SimpleXLSXGen::fromArray( $data );
+
+        $fileName = 'usuarios_exportados.xlsx';
+        return response()->streamDownload(function () use ($file) {
+            echo (string) $file;
+        }, $fileName, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
+
+
+
+
+    }
+
     public function render()
     {
 
+    //     dd(Register::select('childage', DB::raw('count(*) as total'))
+    // ->groupBy('childage')
+    // ->orderBy('childage', 'asc')
+    // ->get());
 
         return view('livewire.participant.participant-page', [
             'children' => Register::whereLike('childname', '%' . $this->search . '%')->orWhereLike('hash', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(10),
 
             'box' => [
-                'all' => Register::count(),
-                'presents' => Register::whereNotNull('checkin_date')->count(),
-                'absense' => Register::whereNull('checkin_date')->count()
+                'Participantes' => Register::count(),
+                'Presentes' => Register::whereNotNull('checkin_date')->count(),
+                'Ausentes' => Register::whereNull('checkin_date')->count(),
+                'Meninos' => Register::where('childgender', 'M')->count(),
+                'Meninas' => Register::where('childgender', 'F')->count(),
             ]
         ]);
     }

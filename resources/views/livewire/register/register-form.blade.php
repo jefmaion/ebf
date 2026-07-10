@@ -145,7 +145,7 @@
       </div>
       <div class="col text-end">
         @if($current == 4)
-        <button type="submit" class="btn btn-primary w-100 btn-lg h2">Send data</button>
+        <button type="submit" class="btn btn-primary w-100 btn-lg h2">Enviar</button>
         @else
         <button type="button" class="btn btn-primary btn-lg h2" wire:click="nextPage({{ $next }})">Próximo</button>
         @endif

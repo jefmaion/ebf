@@ -9,7 +9,7 @@
 
 @if(empty($register->checkin_date) && empty($register->checkout_date))
 <span class="badge bg-secondary text-secondary-fg px-2 mt-1">
-    Não Compareceu
+    Inscrito
 </span>
 @endif
 

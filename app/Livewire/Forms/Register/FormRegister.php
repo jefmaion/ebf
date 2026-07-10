@@ -133,7 +133,7 @@ class FormRegister extends Form
 
         $this->childname = $register->childname;
         $this->childage = $register->childage;
-        $this->childbirthdate = $register->childbirthdate;
+        $this->childbirthdate = $register->childbirthdate->format('Y-m-d');
         $this->childgender = $register->childgender;
         $this->childchurch = $register->childchurch;
         $this->food_restriction = $register->food_restriction;

@@ -18,7 +18,12 @@ return [
 
         'Bem-Vindo' => 'nav-header',
 
-      
+        'Inscrição' => [
+            'route' => 'register-form',
+            'target' => '_blank',
+            'icon'  => file_get_contents(resource_path('views/components/icons/home.blade.php')),
+        ],
+
 
         'Checkin' => [
             'route' => 'checkin',

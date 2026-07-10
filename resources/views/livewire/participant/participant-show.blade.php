@@ -25,6 +25,7 @@
 
 
 
+
     <div class="modal-footer">
         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Fechar</button>
         <button class="btn" wire:click="$dispatch('edit-checkin', {register: {{ $register->id }}})">Editar</button>
